@@ -1,13 +1,24 @@
 const puppeteer = require('puppeteer');
+const process = require('node:process');
+
 const fs = require("fs");
 (async () => {
     if (!fs.existsSync("screenshots")) {
         fs.mkdirSync("screenshots");
     }
+
+    let args = [];
+    for (let i = 2; i < process.argv.length; i++) {
+        args.push(process.argv[i]);
+    }
+
+    console.log(JSON.stringify(args))
+
     const browser = await puppeteer.default.launch({
-        // headless: true,
-        // args: ["--enable-gpu"]
+        headless: true,
+        args
     });
+
     const page = await browser.newPage();
     await page
         .goto('chrome://gpu', { waitUntil: 'networkidle0' })
