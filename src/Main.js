@@ -24,9 +24,8 @@ const fs = require("fs");
         .goto('chrome://gpu', { waitUntil: 'networkidle0' })
         .catch(e => console.log(e));
     await page.setViewport({ width: 1920, height: 1080 });
-    await page.screenshot({
-        type: "jpeg",
-        path: "screenshots/gpu.jpg"
+    await page.pdf({
+        path: "gpu.pdf"
     });
     await browser.close();
 })().catch(err => console.error(err));
